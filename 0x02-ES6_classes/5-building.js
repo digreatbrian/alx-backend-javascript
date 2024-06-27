@@ -1,6 +1,5 @@
-export default class Building {
+class Building {
   constructor(sqft) {
-    this.sqft = sqft;
     if (this.constructor !== Building) {
       if (typeof this.evacuationWarningMessage !== 'function') {
         throw new Error(
@@ -8,13 +7,22 @@ export default class Building {
         );
       }
     }
+    this.sqft = sqft;
+  }
+
+  /**
+   * @param {Number} sqft
+   */
+  set sqft(sqft) {
+    if (typeof sqft !== 'number') {
+      throw new TypeError('sqft must be a number');
+    }
+    this._sqft = sqft;
   }
 
   get sqft() {
     return this._sqft;
   }
-
-  set sqft(value) {
-    this._sqft = value;
-  }
 }
+
+export default Building;
