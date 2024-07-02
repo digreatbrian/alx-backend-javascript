@@ -5,7 +5,7 @@
  * @param {number} students[].id - The ID of each student.
  * @returns {number} The sum of student IDs or 0 if 'students' is not an array.
  */
-function getStudentIdsSum(students) {
+export default function getStudentIdsSum(students) {
   if (!Array.isArray(students)) {
     return 0;
   }
