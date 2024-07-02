@@ -6,21 +6,28 @@
  * @param {Object[]} newGrades - An array of grade update objects, each containing `studentId` and `grade` properties.
  * @returns {Object[]} An array of student objects with updated grades for those living in the specified city. eg [{id:2, grade:98, firsName:"Brian"}, ...]
  */
-export default function updateStudentGradeByCity(students, city, newGrades) {
-  return students.filter((student)=>(student.location === city)).map((student)=>{
-    let grade;
-    for (let i=0; i < newGrades.length; i++){
-      grade = newGrades[i];
-      if (grade.studentId === student.id){
-        if (grade.grade){
-          student.grade = grade.grade;
+export default function updateStudentGradeByCity(
+  students,
+  city,
+  newGrades,
+) {
+  const filterStudents = students.filter(
+    (student) => student.location === city,
+  );
+
+  const gradeStudents = filterStudents.map(
+    (student) => {
+      for (const gradeInfo of newGrades) {
+        if (student.id === gradeInfo.studentId) {
+          student.grade = gradeInfo.grade; // eslint-disable-line no-param-reassign
         }
-        else {
-          student.grade = "N/A";
-        }
-        break;
       }
-    }
-    return student;
-  })
+      if (student.grade === undefined) {
+        student.grade = 'N/A'; // eslint-disable-line no-param-reassign
+      }
+      return student;
+    },
+  );
+
+  return gradeStudents;
 }
